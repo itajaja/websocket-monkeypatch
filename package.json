@@ -1,0 +1,28 @@
+{
+  "name": "websocket-monkeypatch",
+  "version": "0.0.0",
+  "description": "Improve https://github.com/websockets/ws with utility methods",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^5.0.0-beta6",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^3.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itajaja/websocket-monkeypatch.git"
+  },
+  "keywords": [
+    "ws",
+    "websocket"
+  ],
+  "author": "Giacomo Tagliabue",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itajaja/websocket-monkeypatch/issues"
+  },
+  "homepage": "https://github.com/itajaja/websocket-monkeypatch#readme"
+}
