@@ -55,29 +55,36 @@ function _registerCommandHandler() {
 /**
  * Constantly monitors if the connection is still open using ping/pong every
  * `interval` milliseconds. `timeoutCb` is called when the ping/pong doesn't
- * answer in time
+ * answer for `pingTimeout` milliseconds. If `pingTimeout` is not set, it
+ * will equal `interval`
  */
-function monitor(interval, timeoutCb) {
+function monitor(interval, timeoutCb, pingTimeout) {
+  pingTimeout = pingTimeout || interval;
   let currentTimeout;
+  let currentInterval;
 
   const onTimeoutExpired = () => {
     clearTimeout(currentTimeout);
+    clearInterval(currentInterval);
     timeoutCb();
   };
 
+
   const ping = () => {
-    setTimeout(() => {
-      this.ping(undefined, undefined, true);
-      currentTimeout = setTimeout(onTimeoutExpired, interval);
-    }, interval);
+    this.ping(undefined, undefined, true);
+
+    if (currentTimeout) return;
+    currentTimeout = setTimeout(onTimeoutExpired, pingTimeout);
   };
 
   this.on('pong', () => {
     clearTimeout(currentTimeout);
-    ping();
+    currentTimeout = undefined;
   });
 
-  ping();
+  this.on('close', () => onTimeoutExpired());
+  this.on('error', () => onTimeoutExpired());
+  currentInterval = setInterval(() => ping(), interval);
 }
 
 /**
