@@ -36,11 +36,14 @@ function onCommand(command, listener) {
 function _registerCommandHandler() {
   this.registeredCommands = this.registeredCommands || {};
 
-  this._onCommand = this._onCommand || this.on('message', msg => {
+  this._onCommand = this._onCommand || this.on('message', (msg, { binary }) => {
+    if (binary) {
+      return;
+    }
     const jsonMsg = JSON.parse(msg);
     const { command, data } = jsonMsg;
     if (!command || !data) {
-      throw new Error(`invalid message received. ${jsonMsg}`);
+      return;
     }
 
     const callback = this.registeredCommands[command];
