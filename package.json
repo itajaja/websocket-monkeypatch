@@ -1,6 +1,6 @@
 {
   "name": "websocket-monkeypatch",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Improve https://github.com/websockets/ws with utility methods",
   "main": "lib/index.js",
   "scripts": {
