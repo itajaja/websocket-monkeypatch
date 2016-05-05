@@ -65,8 +65,12 @@ function monitor(interval, timeoutCb, pingTimeout) {
   pingTimeout = pingTimeout || interval;
   let currentTimeout;
   let currentInterval;
+  let closed = false;
 
   const onTimeoutExpired = () => {
+    if (closed) return;
+    closed = true;
+
     clearTimeout(currentTimeout);
     clearInterval(currentInterval);
     timeoutCb();
